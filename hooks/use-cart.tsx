@@ -26,31 +26,45 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([])
   const [cartCount, setCartCount] = useState(0)
   const [cartTotal, setCartTotal] = useState(0)
+  const [isClient, setIsClient] = useState(false)
+
+  // Set isClient to true once component mounts
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // Load cart from localStorage on initial render
   useEffect(() => {
-    const savedCart = localStorage.getItem("cart")
-    if (savedCart) {
+    if (isClient) {
       try {
-        const parsedCart = JSON.parse(savedCart)
-        setCart(parsedCart)
+        const savedCart = localStorage.getItem("cart")
+        if (savedCart) {
+          const parsedCart = JSON.parse(savedCart)
+          setCart(parsedCart)
+        }
       } catch (error) {
         console.error("Failed to parse cart from localStorage:", error)
       }
     }
-  }, [])
+  }, [isClient])
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart))
+    if (isClient) {
+      try {
+        localStorage.setItem("cart", JSON.stringify(cart))
+      } catch (error) {
+        console.error("Failed to save cart to localStorage:", error)
+      }
 
-    // Calculate cart count and total
-    const count = cart.reduce((total, item) => total + item.quantity, 0)
-    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+      // Calculate cart count and total
+      const count = cart.reduce((total, item) => total + item.quantity, 0)
+      const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
-    setCartCount(count)
-    setCartTotal(total)
-  }, [cart])
+      setCartCount(count)
+      setCartTotal(total)
+    }
+  }, [cart, isClient])
 
   const addToCart = (item: CartItem) => {
     setCart((prevCart) => {
