@@ -419,14 +419,14 @@ export default function OrderPage() {
                       <h3 className="font-medium text-gray-900 dark:text-white text-sm sm:text-base mb-1 truncate">
                         {product.name}
                       </h3>
-                      <p className="text-brand-pink font-semibold text-sm sm:text-base mb-2">
+                      <p className="text-gray-900 dark:text-gray-100 font-semibold text-sm sm:text-base mb-2">
                         ${product.price.toFixed(2)}
                       </p>
 
                       {/* Rating and Allergens */}
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center">
-                          <Star className="h-3 w-3 text-brand-pink fill-brand-pink" />
+                          <Star className="h-3 w-3 text-yellow-400 fill-yellow-400" />
                           <span className="text-xs text-gray-600 dark:text-gray-400 ml-1">{product.rating}</span>
                         </div>
                         <div className="flex space-x-1">
@@ -496,7 +496,7 @@ export default function OrderPage() {
             <div className="container mx-auto">
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
-                  <ShoppingCart className="h-5 w-5 text-brand-pink mr-2" />
+                  <ShoppingCart className="h-5 w-5 text-gray-700 dark:text-gray-300 mr-2" />
                   <span className="text-gray-900 dark:text-white font-medium">
                     {cartCount} {cartCount === 1 ? "item" : "items"} — ${cartTotal.toFixed(2)}
                   </span>

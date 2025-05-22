@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
-import { ChevronLeft, ChevronRight, Star, Plus, Wheat, Droplet, Nut } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Star, Plus, Wheat, Droplet, Nut } from "lucide-react"
 
 export default function FlavorCarousel() {
   const flavors = [
@@ -180,10 +180,10 @@ export default function FlavorCarousel() {
                             fill={i < Math.floor(flavor.rating) ? "currentColor" : "none"}
                             className={`h-4 w-4 ${
                               i < Math.floor(flavor.rating)
-                                ? "text-brand-pink"
+                                ? "text-yellow-400"
                                 : i < flavor.rating
-                                ? "text-brand-pink fill-brand-pink/50"
-                                : "text-gray-300"
+                                  ? "text-yellow-400 fill-yellow-400/50"
+                                  : "text-gray-300"
                             }`}
                           />
                         ))}
