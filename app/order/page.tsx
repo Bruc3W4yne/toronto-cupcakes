@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { ArrowLeft, ChevronDown, ChevronUp, Search, Star, Plus, Minus, ShoppingCart } from "lucide-react"
+import { ArrowLeft, ChevronDown, ChevronUp, Search, Star, Plus, Minus, ShoppingCart, ShoppingBag } from "lucide-react"
 import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import { useCart } from "@/hooks/use-cart"
@@ -286,10 +286,11 @@ export default function OrderPage() {
                       </button>
                     </div>
                     <button
-                      className="bg-brand-pink hover:bg-brand-pink/90 text-black font-bold py-2 px-4 rounded-lg transition-all duration-200 ease-out shadow-sm border border-black"
+                      className="bg-brand-pink hover:bg-brand-pink/90 text-black font-bold py-2 px-4 rounded-lg transition-all duration-200 ease-out shadow-sm border border-black flex items-center"
                       onClick={addDozenToCart}
                     >
-                      <span className="drop-shadow-none">Add Dozen to Cart</span>
+                      <ShoppingBag className="h-4 w-4 mr-2" />
+                      <span className="drop-shadow-none">Add to Cart</span>
                     </button>
                   </div>
                 </div>
@@ -442,12 +443,13 @@ export default function OrderPage() {
                         </div>
                       </div>
 
-                      {/* Quantity and Add Button */}
-                      <div className="flex items-center justify-between">
+                      {/* Quantity Controls */}
+                      <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center border border-gray-300 dark:border-gray-600 rounded-md">
                           <button
                             className="px-2 py-1 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                             onClick={() => updateProductQuantity(product.id, (productQuantities[product.id] || 1) - 1)}
+                            aria-label="Decrease quantity"
                           >
                             <Minus className="h-3 w-3" />
                           </button>
@@ -457,17 +459,21 @@ export default function OrderPage() {
                           <button
                             className="px-2 py-1 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                             onClick={() => updateProductQuantity(product.id, (productQuantities[product.id] || 1) + 1)}
+                            aria-label="Increase quantity"
                           >
                             <Plus className="h-3 w-3" />
                           </button>
                         </div>
-                        <button
-                          className="bg-brand-pink hover:bg-brand-pink/90 text-white text-xs font-medium py-1 px-2 rounded-full flex items-center transition-all duration-200 ease-out"
-                          onClick={() => addProductToCart(product)}
-                        >
-                          <Plus className="h-3 w-3 mr-1" /> Add
-                        </button>
                       </div>
+
+                      {/* Add to Cart Button */}
+                      <button
+                        className="w-full bg-brand-pink hover:bg-brand-pink/90 text-black py-2 px-3 rounded-md flex items-center justify-center transition-all duration-200 ease-out font-bold border border-black shadow-sm"
+                        onClick={() => addProductToCart(product)}
+                      >
+                        <ShoppingBag className="h-4 w-4 mr-2 text-black" />
+                        <span className="drop-shadow-sm">Add to Cart</span>
+                      </button>
                     </div>
                   </div>
                 ))}
