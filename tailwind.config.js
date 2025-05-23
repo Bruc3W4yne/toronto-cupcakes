@@ -10,7 +10,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "brand-pink": "#E8477C",
+        "brand-pink": "#E6396A",
+        "hover-pink": "#C42857",
         "accent-gold": "#F4D19B",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

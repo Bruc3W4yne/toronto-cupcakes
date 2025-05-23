@@ -1,36 +1,23 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useRef } from "react"
 import AnnouncementBar from "@/components/announcement-bar"
 import Navigation from "@/components/navigation"
 import Hero from "@/components/hero"
-import NewsletterPopover from "@/components/newsletter-popover"
 import UspGrid from "@/components/usp-grid"
 import FlavorCarousel from "@/components/flavor-carousel"
 import SocialProof from "@/components/social-proof"
 import Footer from "@/components/footer"
+import { useCart } from "@/hooks/use-cart"
 
 export default function Home() {
-  const [showNewsletter, setShowNewsletter] = useState(false)
+  const { cartCount } = useCart()
+  const previousCartCountRef = useRef(0)
 
+  // Update previous cart count reference
   useEffect(() => {
-    // Check if user has dismissed the newsletter popup before
-    const hasSeenNewsletter = localStorage.getItem("hasSeenNewsletter")
-
-    if (!hasSeenNewsletter) {
-      // Show newsletter after a short delay
-      const timer = setTimeout(() => {
-        setShowNewsletter(true)
-      }, 3000)
-
-      return () => clearTimeout(timer)
-    }
-  }, [])
-
-  const dismissNewsletter = () => {
-    setShowNewsletter(false)
-    localStorage.setItem("hasSeenNewsletter", "true")
-  }
+    previousCartCountRef.current = cartCount
+  }, [cartCount])
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -43,7 +30,6 @@ export default function Home() {
         <SocialProof />
       </main>
       <Footer />
-      {showNewsletter && <NewsletterPopover onDismiss={dismissNewsletter} />}
     </div>
   )
 }

@@ -1,7 +1,17 @@
-import Link from "next/link"
+"use client"
+
+import { useRouter } from "next/navigation"
 import { Clock, Palette, Truck, Award } from "lucide-react"
 
 export default function UspGrid() {
+  const router = useRouter()
+
+  const handleTopFlavorsClick = () => {
+    // Navigate to order page with top5 category selected
+    router.push("/order?category=top5#top")
+    // The focus will be handled by the browser when navigating to the anchor
+  }
+
   const features = [
     {
       icon: <Clock className="h-10 w-10 sm:h-12 sm:w-12 text-brand-pink" strokeWidth={1.5} />,
@@ -22,7 +32,7 @@ export default function UspGrid() {
       icon: <Award className="h-10 w-10 sm:h-12 sm:w-12 text-brand-pink" strokeWidth={1.5} />,
       title: "Top 5 Flavours",
       description: "See what's trending now",
-      link: "#flavors",
+      onClick: handleTopFlavorsClick,
     },
   ]
 
@@ -31,10 +41,10 @@ export default function UspGrid() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-2 gap-4 sm:gap-6">
           {features.map((feature, index) =>
-            feature.link ? (
-              <Link
+            feature.onClick ? (
+              <button
                 key={index}
-                href={feature.link}
+                onClick={feature.onClick}
                 className="feature-card bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-lg shadow-sm flex flex-col justify-center items-center text-center cursor-pointer hover:shadow-lg hover:-translate-y-1 focus:shadow-lg focus:-translate-y-1 active:scale-95 transition-all duration-200 ease-out w-full aspect-[4/5]"
               >
                 <div className="mb-4 flex items-center justify-center">{feature.icon}</div>
@@ -42,7 +52,7 @@ export default function UspGrid() {
                   {feature.title}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 text-sm sm:text-base">{feature.description}</p>
-              </Link>
+              </button>
             ) : (
               <div
                 key={index}

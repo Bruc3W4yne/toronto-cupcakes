@@ -33,17 +33,39 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setIsClient(true)
   }, [])
 
+  const CART_EXPIRY_HOURS = 24 // Cart expires after 24 hours
+
+  // Add this function after the CartProvider function definition:
+  const isCartExpired = (timestamp: number) => {
+    const now = Date.now()
+    const expiryTime = CART_EXPIRY_HOURS * 60 * 60 * 1000 // Convert to milliseconds
+    return now - timestamp > expiryTime
+  }
+
   // Load cart from localStorage on initial render
   useEffect(() => {
     if (isClient) {
       try {
         const savedCart = localStorage.getItem("cart")
-        if (savedCart) {
-          const parsedCart = JSON.parse(savedCart)
-          setCart(parsedCart)
+        const cartTimestamp = localStorage.getItem("cartTimestamp")
+
+        if (savedCart && cartTimestamp) {
+          const timestamp = Number.parseInt(cartTimestamp, 10)
+
+          if (!isCartExpired(timestamp)) {
+            const parsedCart = JSON.parse(savedCart)
+            setCart(parsedCart)
+          } else {
+            // Clear expired cart
+            localStorage.removeItem("cart")
+            localStorage.removeItem("cartTimestamp")
+          }
         }
       } catch (error) {
         console.error("Failed to parse cart from localStorage:", error)
+        // Clear corrupted data
+        localStorage.removeItem("cart")
+        localStorage.removeItem("cartTimestamp")
       }
     }
   }, [isClient])
@@ -53,6 +75,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     if (isClient) {
       try {
         localStorage.setItem("cart", JSON.stringify(cart))
+        localStorage.setItem("cartTimestamp", Date.now().toString())
       } catch (error) {
         console.error("Failed to save cart to localStorage:", error)
       }

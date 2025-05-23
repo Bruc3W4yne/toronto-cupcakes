@@ -33,7 +33,7 @@ export default function NewsletterPopover({ onDismiss }: NewsletterPopoverProps)
       className="fixed inset-0 bg-black/50 z-50 flex items-end justify-center sm:items-center"
       style={{ display: isVisible ? "flex" : "none" }}
     >
-      <div className="bg-white dark:bg-gray-800 w-full max-w-md rounded-t-xl sm:rounded-xl shadow-xl">
+      <div className="bg-white dark:bg-gray-800 w-full max-w-md rounded-t-xl sm:rounded-xl shadow-xl max-h-[30vh] overflow-auto">
         <div className="p-6">
           <div className="flex justify-between items-start mb-4">
             <h2 className="font-playfair text-xl font-bold text-gray-900 dark:text-white">
@@ -69,7 +69,7 @@ export default function NewsletterPopover({ onDismiss }: NewsletterPopoverProps)
             </div>
             <button
               type="submit"
-              className="w-full bg-brand-pink hover:bg-brand-pink/90 text-white font-bold py-2 px-4 rounded-lg transition-colors"
+              className="w-full bg-brand-pink hover:bg-hover-pink text-white font-bold py-1.5 px-3 rounded text-sm transition-colors"
             >
               Get My Discount
             </button>
@@ -78,6 +78,11 @@ export default function NewsletterPopover({ onDismiss }: NewsletterPopoverProps)
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">
             By signing up, you agree to receive marketing emails. You can unsubscribe at any time.
           </p>
+
+          {/* Hidden sentinel for focus trap */}
+          <div tabIndex={0} className="sr-only">
+            End of dialog
+          </div>
         </div>
       </div>
     </div>

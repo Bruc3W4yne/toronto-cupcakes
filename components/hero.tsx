@@ -78,7 +78,7 @@ export default function Hero() {
           <Link
             href="/order"
             id="orderBtn"
-            className={`inline-block bg-brand-pink hover:bg-brand-pink/90 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all duration-300 text-lg border-2 border-white/30 backdrop-blur-sm hover:scale-105 hover:shadow-xl active:bg-pink-700 active:scale-95 active:shadow-inner focus:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 ${
+            className={`inline-block bg-brand-pink hover:bg-hover-pink text-white font-bold py-1.5 px-3 rounded text-sm border-2 border-white/30 backdrop-blur-sm hover:scale-105 hover:shadow-xl active:bg-hover-pink active:scale-95 active:shadow-inner focus:bg-hover-pink focus:outline-none focus:ring-2 focus:ring-brand-pink focus:ring-opacity-50 ${
               isKeyboardOpen ? "fixed bottom-4 left-1/2 transform -translate-x-1/2 z-30 w-[calc(100%-2rem)]" : ""
             }`}
           >
